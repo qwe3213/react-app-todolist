@@ -11,6 +11,7 @@ export default function App() {
       <div className="todoBlock">
         <div className="title">
           <h1>할 일 목록</h1>
+          <h1 className="text-3xl font-bold underline">Hello world!</h1>
         </div>
         <List tododata={tododata} setTododata={setTododata} />
 
