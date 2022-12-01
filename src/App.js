@@ -1,10 +1,17 @@
-import React, {useState} from "react";
+import React, {useState, useCallback} from "react";
 import "./App.css";
-import List from "./components/List";
+import Lists from "./components/Lists";
 import Form from "./components/Form";
 export default function App() {
   const [tododata, setTododata] = useState([]);
   const [value, setValue] = useState("");
+  const handleClick = useCallback(
+    (id) => {
+      let newTodoData = tododata.filter((data) => data.id !== id); // 입력한것 지우기
+      setTododata(newTodoData);
+    },
+    [tododata]
+  );
 
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-blue-100 ">
@@ -12,7 +19,11 @@ export default function App() {
         <div className="flex justify-between mb-3">
           <h1>할 일 목록</h1>
         </div>
-        <List tododata={tododata} setTododata={setTododata} />
+        <Lists
+          handleClick={handleClick}
+          tododata={tododata}
+          setTododata={setTododata}
+        />
 
         <Form value={value} setValue={setValue} setTododata={setTododata} />
       </div>
