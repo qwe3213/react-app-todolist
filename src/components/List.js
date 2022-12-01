@@ -21,6 +21,7 @@ const List = React.memo(
         return data;
       });
       setTododata(newTodoData);
+      localStorage.setItem("tododata", JSON.stringify(newTodoData));
     };
 
     const handleChange = (event) => {
@@ -35,9 +36,11 @@ const List = React.memo(
         return data;
       });
       setTododata(newTodoData);
+      localStorage.setItem("tododata", JSON.stringify(newTodoData));
       setIsediting(false);
     };
     if (isediting) {
+      //edit을 눌러 수정중인상황
       return (
         <div
           className={`flex items-center justify-between w-full  px-3 py-1 my-2 bg-gray-100  text-gray-600  border rounded `}

@@ -5,11 +5,14 @@ import List from "./List";
 const Lists = React.memo(({tododata, setTododata, handleClick}) => {
   const handleEnd = (result) => {
     if (!result.destination) return;
-    const newdata = tododata;
-    const [reorderItem] = newdata.splice(result.source.index, 1); //변경시키는 아이템을 제거하기
-    newdata.splice(result.destination.index, 0, reorderItem);
-    setTododata(newdata);
-    console.log("result", result);
+    const newTodoData = tododata;
+    // 1. 변경시키는 아이템을 제거하기
+    // 2. return 값으로 지워진 아이템을 잡아준다.
+    const [reorderItem] = newTodoData.splice(result.source.index, 1);
+    // 원하는 자리에 reorderItem을 insert해준다.
+    newTodoData.splice(result.destination.index, 0, reorderItem);
+    setTododata(newTodoData);
+    localStorage.setItem("tododata", JSON.stringify(newTodoData));
   };
   return (
     <div>

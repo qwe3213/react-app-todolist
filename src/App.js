@@ -2,6 +2,9 @@ import React, {useState, useCallback} from "react";
 import "./App.css";
 import Lists from "./components/Lists";
 import Form from "./components/Form";
+const initialTodoData = localStorage.getItem("tododata")
+  ? JSON.parse(localStorage.getItem("tododata"))
+  : [];
 export default function App() {
   const [tododata, setTododata] = useState([]);
   const [value, setValue] = useState("");
@@ -9,11 +12,26 @@ export default function App() {
     (id) => {
       let newTodoData = tododata.filter((data) => data.id !== id); // 입력한것 지우기
       setTododata(newTodoData);
+      localStorage.setItem("tododata", JSON.stringify(newTodoData));
     },
     [tododata]
   );
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //새로운 할일 데이터
+    let newTodo = {
+      id: Date.now(),
+      title: value,
+      completed: false,
+    };
+    setTododata((prev) => [...prev, newTodo]); // prev 이전의값 ...prev는 이전의값 배열안의 것들 모두, newTodo는 새로운값    //원래 있던 할 일에 새로운 할 일 더해주기
+    localStorage.setItem("tododata", JSON.stringify([...tododata, newTodo]));
+    setValue(""); // value의 값을 빈값으로 설정
+  };
   const handleAllDeleteclick = () => {
     setTododata([]);
+    localStorage.setItem("tododata", JSON.stringify([]));
   };
 
   return (
@@ -29,7 +47,7 @@ export default function App() {
           setTododata={setTododata}
         />
 
-        <Form value={value} setValue={setValue} setTododata={setTododata} />
+        <Form value={value} setValue={setValue} handleSubmit={handleSubmit} />
       </div>
     </div>
   );
