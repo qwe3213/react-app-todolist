@@ -6,7 +6,7 @@ const initialTodoData = localStorage.getItem("tododata")
   ? JSON.parse(localStorage.getItem("tododata"))
   : [];
 export default function App() {
-  const [tododata, setTododata] = useState([]);
+  const [tododata, setTododata] = useState(initialTodoData);
   const [value, setValue] = useState("");
   const handleClick = useCallback(
     (id) => {
